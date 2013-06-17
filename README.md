@@ -13,6 +13,16 @@ https://en.bitcoin.it/wiki/MtGox/API/HTTP/v1#Multi_Currency_depth
 
 All prices are normalized to USD.
 
+## Running Tests
+
+To run the application tests and the development server, you first need to install the application's requirements. It is recommended to do this within a virtualenv:
+
+``pip install -r requirements.txt``
+
+Then to run tests:
+
+``python manage.py test``
+
 ## Implementation
 
 The application is implemented as a simple Django/Python WSGI application. There
