@@ -1,6 +1,7 @@
 # Django settings for btcx (BTC Exchange) project.
 
 import os
+import sys
 import djcelery
 from datetime import timedelta
 from django.utils import importlib
@@ -85,9 +86,9 @@ MIDDLEWARE_CLASSES = (
 
 INSTALLED_APPS = (
     'django.contrib.staticfiles',
+    'django_extensions',
     'btcx.apps.exchange',
     'djcelery',
-    'south',
 )
 
 # ----------------------------------------------------------------------------
@@ -127,12 +128,35 @@ CELERYBEAT_SCHEDULE = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['console'],
+    },
+    'formatters': {
+        'verbose': {
+            'format': ''.join([
+                '[%(asctime)s]',
+                '[%(levelname)s] ',
+                '%(name)s ',
+                '%(filename)s:',
+                '%(funcName)s:',
+                '%(lineno)d | ',
+                '%(message)s'
+            ]),
+            'datefmt': '%H:%M:%S',
+        },
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
         }
     },
     'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -147,6 +171,25 @@ LOGGING = {
         },
     }
 }
+
+
+# ----------------------------------------------------------------------------
+# Testing
+# ----------------------------------------------------------------------------
+
+# Use nose to run tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Detect test environment
+TESTING = 'test' in sys.argv
+
+if TESTING:
+    # skip migrations and south tests when running tests
+    SOUTH_TESTS_MIGRATE = False
+    SKIP_SOUTH_TESTS = True
+
+    # console logging for tests
+    LOGGING['root']['handlers'] = ['console']
 
 
 # ----------------------------------------------------------------------------
