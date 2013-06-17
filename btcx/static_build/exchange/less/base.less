@@ -1,0 +1,30 @@
+/* hide loading indicator in IE<10 since it's all CSS3 */
+html.lte9 form {
+    .loading-indicator { display: none; }
+}
+
+.exchange {
+    form.loading {
+        .loading-indicator { visibility: visible; }
+    }
+
+    form {
+        label { font-size: 20px }
+        select, input { margin: 0 8px; }
+        .loading-indicator {
+            top: 4px;
+            left: 4px;
+        }
+        .controls {
+            display: inline-block;
+            margin-left: 10px;
+        }
+    }
+
+
+    #result.active { display: block; }
+    #result {
+        display: none;
+        font-size: 200%;
+    }
+}

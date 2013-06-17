@@ -1,0 +1,41 @@
+{% extends "common/base.html" %}
+
+{% block bodyid %}home{% endblock %}
+{% block bodyclass %}exchange{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{{STATIC_URL}}exchange/css/base.css">
+{% endblock %}
+
+{% block content %}
+<div id="exchange-container" class="well">
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="exchange-value">I would like to</label>
+            <div class="controls">
+                <select class="span2" name="action">
+                    <option value="buy">buy</option>
+                    <option value="sell">sell</option>
+                </select>
+                <div class="input-prepend">
+                    <span class="add-on">฿</span>
+                    <input class="span10 textinput" id="exchange-value" name="value" type="text" placeholder="0.00">
+                </div>
+                <button type="submit" class="btn btn-primary">Get Price</button>
+                {% include "common/loading.html" %}
+                <div class="help-inline"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="result" class="well"></div>
+{% endblock %}
+
+{% block js %}
+<script src="{{ STATIC_URL }}exchange/js/exchange.js"></script>
+<script>
+    $(document).ready(function () {
+        new BTCX.Exchange();
+    });
+</script>
+{% endblock %}
