@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
 from btcx.apps.exchange.views import HomeView, BuyApiView, SellApiView
 
 urlpatterns = patterns('',
